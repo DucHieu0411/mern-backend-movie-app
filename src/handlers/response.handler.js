@@ -4,7 +4,7 @@ const responseWithData = (res, statusCode, data) =>
 const error = (res) =>
   responseWithData(res, 500, {
     status: 500,
-    message: "Oops! Something wrong!",
+    message: "Oops! Something worng!",
   });
 
 const badrequest = (res, message) =>

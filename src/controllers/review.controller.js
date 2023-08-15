@@ -48,7 +48,7 @@ const getReviewsOfUser = async (req, res) => {
       .find({
         user: req.user.id,
       })
-      .sort("-createAt");
+      .sort("-createdAt");
 
     responseHandler.ok(res, reviews);
   } catch {
@@ -56,8 +56,4 @@ const getReviewsOfUser = async (req, res) => {
   }
 };
 
-export default {
-  create,
-  remove,
-  getReviewsOfUser,
-};
+export default { create, remove, getReviewsOfUser };

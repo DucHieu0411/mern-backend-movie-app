@@ -11,6 +11,7 @@ const tokenDecode = (req) => {
 
       return jsonwebtoken.verify(token, process.env.TOKEN_SECRET);
     }
+
     return false;
   } catch {
     return false;
@@ -31,4 +32,4 @@ const auth = async (req, res, next) => {
   next();
 };
 
-export default { tokenDecode, auth };
+export default { auth, tokenDecode };

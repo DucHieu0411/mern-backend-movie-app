@@ -41,7 +41,7 @@ const signin = async (req, res) => {
 
     const user = await userModel
       .findOne({ username })
-      .select("username password salt is displayName");
+      .select("username password salt id displayName");
 
     if (!user) return responseHandler.badrequest(res, "User not exist");
 
@@ -96,15 +96,15 @@ const getInfo = async (req, res) => {
 
     if (!user) return responseHandler.notfound(res);
 
-    responseHandler.oke(res, user);
+    responseHandler.ok(res, user);
   } catch {
     responseHandler.error(res);
   }
 };
 
 export default {
-  signin,
   signup,
-  updatePassword,
+  signin,
   getInfo,
+  updatePassword,
 };

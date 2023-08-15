@@ -3,7 +3,7 @@ import tmdbApi from "../tmdb/tmdb.api.js";
 import userModel from "../models/user.model.js";
 import favoriteModel from "../models/favorite.model.js";
 import reviewModel from "../models/review.model.js";
-import tokenMiddleware from "../middlewares/token.middleware.js";
+import tokenMiddlerware from "../middlewares/token.middleware.js";
 
 const getList = async (req, res) => {
   try {
@@ -45,7 +45,7 @@ const search = async (req, res) => {
       mediaType: mediaType === "people" ? "person" : mediaType,
     });
 
-    responseHandler.oke(res, response);
+    responseHandler.ok(res, response);
   } catch {
     responseHandler.error(res);
   }
@@ -59,7 +59,7 @@ const getDetail = async (req, res) => {
 
     const media = await tmdbApi.mediaDetail(params);
 
-    media.credits = await tmdbApi.mediaCredits({ params });
+    media.credits = await tmdbApi.mediaCredits(params);
 
     const videos = await tmdbApi.mediaVideos(params);
 
@@ -71,7 +71,7 @@ const getDetail = async (req, res) => {
 
     media.images = await tmdbApi.mediaImages(params);
 
-    const tokenDecoded = tokenMiddleware.tokenDecode(req);
+    const tokenDecoded = tokenMiddlerware.tokenDecode(req);
 
     if (tokenDecoded) {
       const user = await userModel.findById(tokenDecoded.data);
@@ -88,17 +88,13 @@ const getDetail = async (req, res) => {
     media.reviews = await reviewModel
       .find({ mediaId })
       .populate("user")
-      .sort("-createAt");
+      .sort("-createdAt");
 
     responseHandler.ok(res, media);
-  } catch {
+  } catch (e) {
+    console.log(e);
     responseHandler.error(res);
   }
 };
 
-export default {
-  getList,
-  getGenres,
-  search,
-  getDetail,
-};
+export default { getList, getGenres, search, getDetail };
